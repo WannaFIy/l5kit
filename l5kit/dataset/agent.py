@@ -112,7 +112,7 @@ class AgentDataset(EgoDataset):
             state_index = frame_index
         else:
             state_index = frame_index - self.cumulative_sizes[scene_index - 1]
-        return self.get_frame(scene_index, state_index, track_id=track_id)
+        return self.get_frame(scene_index, state_index, track_id=track_id), frame_index
 
     def get_scene_dataset(self, scene_index: int) -> "AgentDataset":
         """
