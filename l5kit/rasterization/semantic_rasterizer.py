@@ -172,7 +172,7 @@ class SemanticRasterizer(Rasterizer):
             lane_coords = self.proto_API.get_lane_coords(self.bounds_info["lanes"]["ids"][idx])
             xy_left = cv2_subpixel(transform_points(lane_coords["xyz_left"][:, :2], raster_from_world))
             xy_right = cv2_subpixel(transform_points(lane_coords["xyz_right"][:, :2], raster_from_world))
-            lanes_area = np.vstack((xy_left, np.flip(xy_right, 0)))  # start->end left then end->start right
+            lanes_area = np.concatenate((xy_left, xy_right[::-1]), axis=0)  # start->end left then end->start right
 
             # Note(lberg): this called on all polygons skips some of them, don't know why
             cv2.fillPoly(img, [lanes_area], (17, 17, 31), lineType=cv2.LINE_AA, shift=CV2_SHIFT)
